@@ -5,11 +5,13 @@ on:
     branches: [main]
     paths:
       - 'content/**'
+      - 'templates/**'
       - 'scripts/build_content.py'
   pull_request:
     branches: [main]
     paths:
       - 'content/**'
+      - 'templates/**'
       - 'scripts/build_content.py'
 
 jobs:
