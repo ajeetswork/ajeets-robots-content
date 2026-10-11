@@ -6,6 +6,7 @@ on:
     paths:
       - 'assets/images/**'
       - 'scripts/check_images.py'
+      - 'requirements-audit.txt'
 
 jobs:
   audit:
@@ -15,4 +16,12 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Cache pip downloads
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: pip-${{ runner.os }}-py3.12-${{ hashFiles('requirements-audit.txt') }}
+          restore-keys: |
+            pip-${{ runner.os }}-py3.12-
+      - run: pip install -r requirements-audit.txt
       - run: python scripts/check_images.py
