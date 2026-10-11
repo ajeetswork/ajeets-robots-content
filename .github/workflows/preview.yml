@@ -22,9 +22,8 @@ jobs:
         uses: actions/cache@v4
         with:
           path: .cache/preview
-          key: preview-${{ runner.os }}-node20-${{ hashFiles('package-lock.json', 'templates/**') }}
+          key: preview-${{ runner.os }}-node20-${{ hashFiles('templates/**', 'scripts/build-preview.mjs') }}
           restore-keys: |
             preview-${{ runner.os }}-node20-
-            preview-
       - run: npm ci --ignore-scripts
       - run: node scripts/build-preview.mjs --cache .cache/preview
