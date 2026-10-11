@@ -7,6 +7,7 @@ on:
       - 'content/**'
       - 'legacy-content/**'
       - 'scripts/check_links.py'
+      - 'requirements-links.txt'
 
 jobs:
   links:
@@ -16,4 +17,15 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - run: python scripts/check_links.py
+      - name: Restore link checker environment
+        uses: actions/cache@v4
+        with:
+          path: .venv
+          key: linkcheck-${{ runner.os }}-${{ hashFiles('requirements-links.txt') }}
+      - name: Prepare link checker environment
+        run: |
+          if [ ! -x .venv/bin/python ]; then
+            python -m venv .venv
+          fi
+          .venv/bin/pip install -r requirements-links.txt
+      - run: .venv/bin/python scripts/check_links.py
