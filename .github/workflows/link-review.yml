@@ -21,7 +21,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: .venv
-          key: linkcheck-${{ runner.os }}-${{ hashFiles('requirements-links.txt') }}
+          key: linkcheck-${{ runner.os }}-py3.12-${{ hashFiles('requirements-links.txt') }}
       - name: Prepare link checker environment
         run: |
           if [ ! -x .venv/bin/python ]; then

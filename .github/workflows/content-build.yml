@@ -28,5 +28,5 @@ jobs:
         uses: actions/cache@v4
         with:
           path: .cache/content-build
-          key: content-build-${{ runner.os }}-${{ hashFiles('content/**/*.md', 'content-build.toml') }}
+          key: content-build-${{ runner.os }}-${{ hashFiles('content/**/*.md', 'content-build.toml', 'templates/**', 'scripts/build_content.py') }}
       - run: python scripts/build_content.py --cache-dir .cache/content-build
