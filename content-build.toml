@@ -1,0 +1,3 @@
+[render]
+template = "templates/product-card.html"
+output_dir = "dist/content"
