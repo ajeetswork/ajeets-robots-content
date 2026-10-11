@@ -1,0 +1,10 @@
+{
+  "name": "ajeets-robots-content",
+  "private": true,
+  "scripts": {
+    "preview": "node scripts/build-preview.mjs"
+  },
+  "engines": {
+    "node": "20.x"
+  }
+}
