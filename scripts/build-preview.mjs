@@ -8,8 +8,9 @@ fs.mkdirSync(cacheDir, { recursive: true });
 const cacheFile = path.join(cacheDir, 'template-preview.txt');
 
 if (fs.existsSync(cacheFile)) {
-  console.log('Reusing preview transform cache');
+  console.log(fs.readFileSync(cacheFile, 'utf8'));
 } else {
-  fs.writeFileSync(cacheFile, template.toUpperCase());
-  console.log('Created preview transform cache');
+  const rendered = `platform=${process.platform};abi=${process.versions.modules}\n${template.toUpperCase()}`;
+  fs.writeFileSync(cacheFile, rendered);
+  console.log(rendered);
 }
