@@ -5,11 +5,15 @@ on:
     branches: [main]
     paths:
       - 'content/**'
+      - 'templates/**'
+      - 'content-build.toml'
       - 'scripts/build_content.py'
   pull_request:
     branches: [main]
     paths:
       - 'content/**'
+      - 'templates/**'
+      - 'content-build.toml'
       - 'scripts/build_content.py'
 
 jobs:
@@ -20,4 +24,9 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - run: python scripts/build_content.py
+      - name: Restore rendered content cache
+        uses: actions/cache@v4
+        with:
+          path: .cache/content-build
+          key: content-build-${{ runner.os }}-${{ hashFiles('content/**/*.md', 'content-build.toml') }}
+      - run: python scripts/build_content.py --cache-dir .cache/content-build
