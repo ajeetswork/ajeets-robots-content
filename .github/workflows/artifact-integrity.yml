@@ -1,0 +1,20 @@
+name: Artifact integrity
+
+on:
+  workflow_dispatch:
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build bundle digest
+        id: digest
+        run: |
+          echo "bundle_sha=sha256:demo-\${GITHUB_RUN_NUMBER}" >> "$GITHUB_OUTPUT"
+
+  verify:
+    runs-on: ubuntu-latest
+    needs: package
+    steps:
+      - name: Verify bundle digest
+        run: echo "Verifying \${{ needs.package.outputs.bundle_sha }}"
