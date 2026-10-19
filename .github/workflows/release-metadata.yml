@@ -1,0 +1,25 @@
+name: Release metadata handoff
+
+on:
+  workflow_dispatch:
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    outputs:
+      release_tag: \${{ steps.meta.outputs.release_tag }}
+    steps:
+      - name: Prepare release metadata
+        id: meta
+        env:
+          RELEASE_CHANNEL: stable
+        run: |
+          echo "release_tag=ops-\${GITHUB_RUN_NUMBER}" >> "$GITHUB_OUTPUT"
+          echo "Release channel: $RELEASE_CHANNEL"
+
+  publish:
+    runs-on: ubuntu-latest
+    needs: prepare
+    steps:
+      - name: Read release tag
+        run: echo "Publishing \${{ needs.prepare.outputs.release_tag }}"
