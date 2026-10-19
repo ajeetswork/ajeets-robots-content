@@ -7,7 +7,7 @@ jobs:
   compute:
     runs-on: ubuntu-latest
     outputs:
-      deployment_window: \${{ steps.window.outputs.deployment_window }}
+      deployment_window: ${{ steps.window.outputs.deployment_window }}
     steps:
       - name: Select deployment window
         id: window
@@ -24,4 +24,4 @@ jobs:
       - name: Read deployment window
         run: |
           echo "Region: $DEPLOY_REGION"
-          echo "Window: \${{ needs.compute.outputs.deployment_window }}"
+          echo "Window: ${{ needs.compute.outputs.deployment_window }}"
