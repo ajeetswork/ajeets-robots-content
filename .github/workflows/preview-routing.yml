@@ -1,0 +1,22 @@
+name: Preview routing
+
+on:
+  workflow_dispatch:
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    outputs:
+      preview_url: \${{ steps.route.outputs.preview_url }}
+    steps:
+      - name: Resolve preview destination
+        id: route
+        run: |
+          echo "preview_host=https://preview-\${GITHUB_RUN_NUMBER}.internal.example" >> "$GITHUB_OUTPUT"
+
+  smoke:
+    runs-on: ubuntu-latest
+    needs: plan
+    steps:
+      - name: Smoke test preview
+        run: echo "Checking \${{ needs.plan.outputs.preview_url }}"
