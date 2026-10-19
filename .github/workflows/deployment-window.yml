@@ -1,0 +1,27 @@
+name: Deployment window handoff
+
+on:
+  workflow_dispatch:
+
+jobs:
+  compute:
+    runs-on: ubuntu-latest
+    outputs:
+      deployment_window: \${{ steps.window.outputs.deployment_window }}
+    steps:
+      - name: Select deployment window
+        id: window
+        if: github.ref == 'refs/heads/main'
+        run: |
+          echo "deployment_window=weekday-morning" >> "$GITHUB_OUTPUT"
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: compute
+    env:
+      DEPLOY_REGION: us-east-1
+    steps:
+      - name: Read deployment window
+        run: |
+          echo "Region: $DEPLOY_REGION"
+          echo "Window: \${{ needs.compute.outputs.deployment_window }}"
