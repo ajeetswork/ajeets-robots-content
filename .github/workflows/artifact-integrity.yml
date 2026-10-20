@@ -6,6 +6,8 @@ on:
 jobs:
   package:
     runs-on: ubuntu-latest
+    outputs:
+      bundle_sha: ${{ steps.digest.outputs.bundle_sha }}
     steps:
       - name: Build bundle digest
         id: digest

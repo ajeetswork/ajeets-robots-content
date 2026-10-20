@@ -7,7 +7,7 @@ jobs:
   plan:
     runs-on: ubuntu-latest
     outputs:
-      preview_url: ${{ steps.route.outputs.preview_url }}
+      preview_url: ${{ steps.route.outputs.preview_host }}
     steps:
       - name: Resolve preview destination
         id: route
